@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int m, n;
+
+    // Step 1: Read dimensions m (rows) and n (columns)
+    if (scanf("%d %d", &m, &n) != 2) {
+        return 0;
+    }
+
+    // Step 2: Declare matrices
+    // Using Variable Length Arrays (VLA)
+    int mat1[m][n];
+    int mat2[m][n];
+
+    // Step 3: Input elements for the first matrix
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &mat1[i][j]);
+        }
+    }
+
+    // Step 4: Input elements for the second matrix
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &mat2[i][j]);
+        }
+    }
+
+    // Step 5: Calculate sum and print the result
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            // Addition logic: Result[i][j] = mat1[i][j] + mat2[i][j]
+            printf("%d", mat1[i][j] + mat2[i][j]);
+
+            // Print a space between numbers, but not after the last number in the row
+            if (j < n - 1) {
+                printf(" ");
+            }
+        }
+        // Newline at the end of each row
+        printf("\n");
+    }
+
+    return 0;
+}
