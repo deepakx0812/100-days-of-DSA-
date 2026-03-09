@@ -1,52 +1,64 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-// Node structure
-struct Node {
-    int data;
-    struct Node* next;
-};
+#define MAX 100
 
-struct Node *front = NULL;
-struct Node *rear = NULL;
+int queue[MAX];
+int front = -1, rear = -1;
 
-// Enqueue function
-void enqueue(int value) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    
-    newNode->data = value;
-    newNode->next = NULL;
-
-    if (rear == NULL) {
-        front = rear = newNode;
-        return;
+void enqueue(int value, int n) {
+    if ((rear + 1) % n == front) {
+        return; // queue full
     }
 
-    rear->next = newNode;
-    rear = newNode;
+    if (front == -1) {
+        front = rear = 0;
+    } else {
+        rear = (rear + 1) % n;
+    }
+
+    queue[rear] = value;
 }
 
-// Display queue
-void display() {
-    struct Node* temp = front;
+void dequeue(int n) {
+    if (front == -1) {
+        return; // queue empty
+    }
 
-    while (temp != NULL) {
-        printf("%d ", temp->data);
-        temp = temp->next;
+    if (front == rear) {
+        front = rear = -1;
+    } else {
+        front = (front + 1) % n;
+    }
+}
+
+void display(int n) {
+    if (front == -1) return;
+
+    int i = front;
+    while (1) {
+        printf("%d ", queue[i]);
+        if (i == rear) break;
+        i = (i + 1) % n;
     }
 }
 
 int main() {
-    int n, value;
+    int n, m, x;
 
     scanf("%d", &n);
 
-    for(int i = 0; i < n; i++) {
-        scanf("%d", &value);
-        enqueue(value);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &x);
+        enqueue(x, MAX);
     }
 
-    display();
+    scanf("%d", &m);
+
+    for (int i = 0; i < m; i++) {
+        dequeue(MAX);
+    }
+
+    display(MAX);
 
     return 0;
 }
